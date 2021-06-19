@@ -6,10 +6,18 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
-const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-const cube = new THREE.Mesh(geometry, material);
+const boxGeometry = new THREE.BoxGeometry();
+const torusGeometry = new THREE.TorusGeometry(0.5, 0.1, 20, 100, 20);
+const octahedronGeometry = new THREE.OctahedronGeometry(0.5);
+const material = new THREE.MeshNormalMaterial;
+const cube = new THREE.Mesh(boxGeometry, material);
+const torus = new THREE.Mesh(torusGeometry, material);
+const octahedron = new THREE.Mesh(octahedronGeometry, material);
 scene.add(cube);
+scene.add(torus);
+scene.add(octahedron);
+octahedron.position.x = -1.5;
+torus.position.x = 1.5;
 camera.position.z = 2;
 window.addEventListener('resize', onWindowResize, false);
 function onWindowResize() {
@@ -20,8 +28,6 @@ function onWindowResize() {
 }
 var animate = function () {
     requestAnimationFrame(animate);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
     controls.update();
     render();
 };
